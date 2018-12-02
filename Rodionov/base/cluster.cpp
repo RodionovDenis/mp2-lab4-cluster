@@ -1,6 +1,6 @@
 #include "cluster.h"
 
-TCluster::TCluster(vector<TProcessor> _processers, vector<TProgram> _allPrograms, TQueue<TProgram> _queue) : processers(_processers), allPrograms(_allPrograms), queue(_queue), unfulPrograms(_allPrograms) //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+TCluster::TCluster(vector<TProcessor> _processers, vector<TProgram> _allPrograms, TQueue<TProgram> _queue) : processers(_processers), allPrograms(_allPrograms), queue(_queue), unfulPrograms(_allPrograms) //конструктор
 {
 	stood = 0;
 	coresCommon = 0;
@@ -9,12 +9,12 @@ TCluster::TCluster(vector<TProcessor> _processers, vector<TProgram> _allPrograms
 	coresCommonFree = coresCommon;
 }
 
-bool TCluster::IsCorrectedProgram(TProgram & program) //РїСЂРѕРіСЂР°РјРјР° РєРѕСЂСЂРµРєС‚РЅР° РґР»СЏ РґР°РЅРЅРѕРіРѕ РєР»Р°СЃС‚РµСЂР°?
+bool TCluster::IsCorrectedProgram(TProgram & program) //программа корректна для данного кластера?
 {
 	return program.GetCores() <= coresCommon && !queue.IsFull();
 }
 
-bool TCluster::DownloadProgram(TProgram & program) //Р·Р°РіСЂСѓР·РёС‚СЊ РїСЂРѕРіСЂР°РјРјСѓ РІ РєР»Р°СЃС‚РµСЂ
+bool TCluster::DownloadProgram(TProgram & program) //загрузить программу в кластер
 {
 	for (int i = 0; i < processers.size(); i++)
 		if (processers[i].ExProgram(program))
@@ -27,7 +27,7 @@ bool TCluster::DownloadProgram(TProgram & program) //Р·Р°РіСЂСѓР·РёС‚СЊ РїСЂРѕРі
 	return false;
 }
 
-void TCluster::GenPrograms(double threshould) //СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РїСЂРѕРіСЂР°РјРјСѓ РЅР° РѕРґРЅРѕРј С‚Р°РєС‚Рµ
+void TCluster::GenPrograms(double threshould) //сгенерировать программу на одном такте
 {
 	for (int i = 0; i < unfulPrograms.size(); i++)
 	{
@@ -41,19 +41,19 @@ void TCluster::GenPrograms(double threshould) //СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РїСЂР
 			i--;
 		}
 	}
-	if (queue.IsEmpty() && unfulPrograms.size() != 0 && coresCommonFree != 0) //РїСЂРѕСЃС‚РѕРё
+	if (queue.IsEmpty() && unfulPrograms.size() != 0 && coresCommonFree != 0) //простои
 		stood++;
 }
 
-void TCluster::PerformPrograms() //РІС‹РїРѕР»РЅРёС‚СЊ РїСЂРѕРіСЂР°РјРјС‹(РѕРґРёРЅ С‚Р°РєС‚)
+void TCluster::PerformPrograms() //выполнить программы(один такт)
 {
-	for (int i = 0; i < queue.GetSize(); i++) //СЃС‚Р°РІРёРј РЅР° РІС‹РїРѕР»РЅРµРЅРёРµ
+	for (int i = 0; i < queue.GetSize(); i++) //ставим на выполнение
 	{
 		if (DownloadProgram(queue.PopWithoutDelete()))
 			runPrograms.push_back(queue.Pop());
 		else break;
 	}
-	for (int i = 0; i < runPrograms.size(); i++) //РµСЃС‚СЊ Р»Рё РІС‹РїРѕР»РЅРµРЅРЅС‹Рµ?
+	for (int i = 0; i < runPrograms.size(); i++) //есть ли выполненные?
 	{
 		if (runPrograms[i].GetLeftTacts() == 0)
 		{
@@ -66,13 +66,13 @@ void TCluster::PerformPrograms() //РІС‹РїРѕР»РЅРёС‚СЊ РїСЂРѕРіСЂР°РјРјС‹(РѕРґРёР
 	}
 }
 
-void TCluster::RunTime(double threshould) //РІС‹РїРѕР»РЅРёС‚СЊ С‚Р°РєС‚
+void TCluster::RunTime(double threshould) //выполнить такт
 {
 	PerformPrograms();
 	GenPrograms(threshould);
 }
 
-TStatistic TCluster::GetStatistic(int time) //РїРѕР»СѓС‡РёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
+TStatistic TCluster::GetStatistic(int time) //получить статистику
 {
 	TStatistic statistic;
 	statistic.numberPrograms = refusPrograms.size() + runPrograms.size() + readyPrograms.size();

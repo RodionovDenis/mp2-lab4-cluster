@@ -18,13 +18,13 @@ int main()
 	vector<TProgram> programs;
 	vector<TProcessor> processors;
 	TStatistic stat;
-	cout << "Ð Ð°Ð·Ð¼ÐµÑ€ Ð¾Ñ‡ÐµÑ€ÐµÐ´Ð¸ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼" << endl;
+	cout << "Ðàçìåð î÷åðåäè ïðîãðàìì" << endl;
 	cout << "--> ";
 	cin >> s;
 	TQueue<TProgram> queue(s);
-mark:	cout << "1. Ð¡Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹." << endl;
-	cout << "2. Ð¡Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ñ€Ñ‹ ÐºÐ»Ð°ÑÑ‚ÐµÑ€Ð°." << endl;
-	cout << "3. Ð—Ð°Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ ÐºÐ»Ð°ÑÑ‚ÐµÑ€ Ð¸ Ñ€Ð°ÑÑÑ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÑƒ." << endl;
+mark:	cout << "1. Ñãåíåðèðîâàòü ïðîãðàììû." << endl;
+	cout << "2. Ñãåíåðèðîâàòü ïðîöåññîðû êëàñòåðà." << endl;
+	cout << "3. Çàïóñòèòü êëàñòåð è ðàññ÷èòàòü ñòàòèñòèêó." << endl;
 	cout << "--> ";
 	cin >> flag;
 	switch (flag)
@@ -32,50 +32,50 @@ mark:	cout << "1. Ð¡Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹." << endl;
 	case '1':
 	{
 		int num = dis(gen);
-		for (int i = 0; i < num; i++) //Ð³ÐµÐ½ÐµÑ€Ð°Ñ†Ð¸Ñ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼
+		for (int i = 0; i < num; i++) //ãåíåðàöèÿ ïðîãðàìì
 		{
 			cores = dis(gen);
 			time = dis(gen);
 			TProgram prog(cores, time);
 			programs.push_back(prog);
 		}
-		cout << "Ð¡Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¾ " << num << " Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼." << endl;
+		cout << "Ñãåíåðèðîâàíî " << num << " ïðîãðàìì." << endl;
 		goto mark;
 	}
 	case '2':
 	{
 		int num = dis(gen);
-		for (int i = 0; i < num; i++) //Ð³ÐµÐ½ÐµÑ€Ð°Ñ†Ð¸Ñ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ñ€Ð¾Ð²
+		for (int i = 0; i < num; i++) //ãåíåðàöèÿ ïðîöåññîðîâ
 		{
 			cores = dis(gen);
 			TProcessor proc(cores);
 			processors.push_back(proc);
 		}
-		cout << "Ð¡Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¾ " << num << " Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ñ€Ð¾Ð²." << endl;
+		cout << "Ñãåíåðèðîâàíî " << num << " ïðîöåññîðîâ." << endl;
 		goto mark;
 	}
 	case '3':
 	{
 		if (programs.size() == 0 || processors.size() == 0)
 		{
-			cout << "Ð¡Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€ÑƒÐ¹Ñ‚Ðµ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹ Ð¸ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ñ€Ñ‹, Ð¿Ñ€ÐµÐ¶Ð´Ðµ Ñ‡ÐµÐ¼ Ð·Ð°Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ ÐºÐ»Ð°ÑÑ‚ÐµÑ€." << endl;
+			cout << "Ñãåíåðèðóéòå ïðîãðàììû è ïðîöåññîðû, ïðåæäå ÷åì çàïóñòèòü êëàñòåð." << endl;
 			goto mark;
 		}
 		TCluster cluster(processors, programs, queue);
-		cout << "ÐŸÐ¾Ñ€Ð¾Ð³Ð¾Ð²Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ q (0<q<1) " << endl;
+		cout << "Ïîðîãîâîå çíà÷åíèå q (0<q<1) " << endl;
 		cout << "--> ";
 		cin >> thr;
-		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ‚Ð°ÐºÑ‚Ð¾Ð² " << endl;
+		cout << "Êîëè÷åñòâî òàêòîâ " << endl;
 		cout << "--> ";
 		cin >> tacts;
 		for (int i = tacts; i != 0; i--)
 			cluster.RunTime(thr);
 		stat = cluster.GetStatistic(time);
-		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¿Ð¾ÑÑ‚ÑƒÐ¿Ð¸Ð²ÑˆÐ¸Ñ… Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼: " << stat.numberPrograms << endl;
-		cout << "ÐŸÐ¾Ð»Ð½Ð¾ÑÑ‚ÑŒÑŽ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð½Ñ‹Ñ… Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼: " << stat.readyPrograms << endl;
-		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¾Ñ‚ÐºÐ°Ð·Ð¾Ð²: " << stat.numberRefus << endl;
-		cout << "Ð¡Ñ€ÐµÐ´Ð½ÐµÐµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ‚Ð°ÐºÑ‚Ð¾Ð² Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ñ Ð·Ð°Ð´Ð°Ð½Ð¸Ð¹: " << stat.numberTacts << endl;
-		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ‚Ð°ÐºÑ‚Ð¾Ð² Ð¿Ñ€Ð¾ÑÑ‚Ð¾Ñ: " << stat.stoodTacts << endl;
+		cout << "Êîëè÷åñòâî ïîñòóïèâøèõ ïðîãðàìì: " << stat.numberPrograms << endl;
+		cout << "Ïîëíîñòüþ âûïîëíåííûõ ïðîãðàìì: " << stat.readyPrograms << endl;
+		cout << "Êîëè÷åñòâî îòêàçîâ: " << stat.numberRefus << endl;
+		cout << "Ñðåäíåå êîëè÷åñòâî òàêòîâ âûïîëíåíèÿ çàäàíèé: " << stat.numberTacts << endl;
+		cout << "Êîëè÷åñòâî òàêòîâ ïðîñòîÿ: " << stat.stoodTacts << endl;
 	}
 	}
 }

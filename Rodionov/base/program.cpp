@@ -1,31 +1,31 @@
 #include "program.h"
 #include <random>
 
-TProgram::TProgram(int _coresProg, int _tactsProg) : coresProg(_coresProg), tactsProg(_tactsProg), leftTacts(_tactsProg) //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+TProgram::TProgram(int _coresProg, int _tactsProg) : coresProg(_coresProg), tactsProg(_tactsProg), leftTacts(_tactsProg) //конструктор
 {
 	number++;
 	id = number;
 }
 
-TProgram::TProgram() : coresProg(0), tactsProg(0) //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+TProgram::TProgram() : coresProg(0), tactsProg(0) //конструктор
 {}
 
-int TProgram::GetCores() //СѓР·РЅР°С‚СЊ РєРѕР»-РІРѕ СЏРґРµСЂ
+int TProgram::GetCores() //узнать кол-во ядер
 {
 	return coresProg;
 }
 
-int TProgram::GetLeftTacts() //СѓР·РЅР°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕСЃС‚Р°РІС€РёС…СЃСЏ С‚Р°РєС‚РѕРІ
+int TProgram::GetLeftTacts() //узнать количество оставшихся тактов
 {
 	return leftTacts;
 }
 
-void TProgram::ChangeLeftTacts() //РёР·РјРµРЅРёС‚СЊ РєРѕР»-РІРѕ РѕСЃС‚Р°РІС€РёС…СЃСЏ С‚Р°РєС‚РѕРІ
+void TProgram::ChangeLeftTacts() //изменить кол-во оставшихся тактов
 {
 	leftTacts--;
 }
 
-bool TProgram::GenTask(double threshould) //СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ Р·Р°РґР°РЅРёРµ (РїР°СЂР°РјРµС‚СЂ - РїРѕСЂРѕРі)
+bool TProgram::GenTask(double threshould) //сгенерировать задание (параметр - порог)
 {
 	random_device rd;
 	mt19937 gen(rd());

@@ -7,34 +7,34 @@
 
 struct TStatistic
 {
-	int numberPrograms; //РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕСЃС‚СѓРїРёРІС€РёС… РїСЂРѕРіСЂР°РјРј
-	int readyPrograms; //РїРѕР»РЅРѕСЃС‚СЊСЋ РІС‹РїРѕР»РЅРµРЅРЅС‹С… РїСЂРѕРіСЂР°РјРј
-	int numberRefus; //РєРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚РєР°Р·РѕРІ
-	double numberTacts; //СЃСЂРµРґРЅРµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚Р°РєС‚РѕРІ РІС‹РїРѕР»РЅРµРЅРёВ¤ Р·Р°РґР°РЅРёР№
-	int stoodTacts; //РєРѕР»РёС‡РµСЃС‚РІРѕ С‚Р°РєС‚РѕРІ РїСЂРѕСЃС‚РѕВ¤
+	int numberPrograms; //количество поступивших программ
+	int readyPrograms; //полностью выполненных программ
+	int numberRefus; //количество отказов
+	double numberTacts; //среднее количество тактов выполнени¤ заданий
+	int stoodTacts; //количество тактов просто¤
 };
 
 class TCluster
 {
-	vector<TProcessor> processers; //РїСЂРѕС†РµСЃСЃРѕСЂС‹ РІ РєР»Р°СЃС‚РµСЂРµ
-	vector<TProgram> allPrograms; //РІСЃРµРІРѕР·РјРѕР¶РЅС‹Рµ РїСЂРѕРіСЂР°РјРјС‹
-	vector<TProgram> unfulPrograms; //РїСЂРѕРіСЂР°РјРјС‹, РєРѕС‚РѕСЂС‹Рµ РµС‰Рµ РЅРµ РІС‹РїРѕР»РЅВ¤Р»РёСЃСЊ
-	vector<TProgram> refusPrograms; //РѕС‚РєР°Р·Р°РЅРЅС‹Рµ РїСЂРѕРіСЂР°РјРјС‹
-	vector<TProgram> runPrograms; //РІС‹РїРѕР»РЅВ¤СЋС‰РёРµСЃВ¤ РїСЂРѕРіСЂР°РјРјС‹ РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚
-	vector<TProgram> readyPrograms; //РіРѕС‚РѕРІС‹Рµ, РІС‹РїРѕР»РЅРµРЅРЅС‹Рµ РїСЂРѕРіСЂР°РјРјС‹
-	TQueue<TProgram> queue; //РѕС‡РµСЂРµРґСЊ РІС‹РїРѕР»РЅРµРЅРёВ¤
-	int coresCommon; //РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ В¤РґРµСЂ РєР»Р°СЃС‚РµСЂР°
-	int coresCommonFree; //РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРІРѕР±РѕРґРЅС‹С… В¤РґРµСЂ РєР»Р°СЃС‚РµСЂР°
-	int stood; //РїСЂРѕСЃС‚РѕРё
+	vector<TProcessor> processers; //процессоры в кластере
+	vector<TProgram> allPrograms; //всевозможные программы
+	vector<TProgram> unfulPrograms; //программы, которые еще не выполн¤лись
+	vector<TProgram> refusPrograms; //отказанные программы
+	vector<TProgram> runPrograms; //выполн¤ющиес¤ программы в данный момент
+	vector<TProgram> readyPrograms; //готовые, выполненные программы
+	TQueue<TProgram> queue; //очередь выполнени¤
+	int coresCommon; //общее количество ¤дер кластера
+	int coresCommonFree; //общее количество свободных ¤дер кластера
+	int stood; //простои
 
 public:
-	TCluster(vector<TProcessor> _processers, vector<TProgram> _allPrograms, TQueue<TProgram> _queue); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
-	bool IsCorrectedProgram(TProgram & program); //РїСЂРѕРіСЂР°РјРјР° РєРѕСЂСЂРµРєС‚РЅР° РґР»В¤ РґР°РЅРЅРѕРіРѕ РєР»Р°СЃС‚РµСЂР°?
-	bool DownloadProgram(TProgram & program); //Р·Р°РіСЂСѓР·РёС‚СЊ РїСЂРѕРіСЂР°РјРјСѓ РІ РєР»Р°СЃС‚РµСЂ
-	void GenPrograms(double threshould); //СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РїСЂРѕРіСЂР°РјРјСѓ РЅР° РѕРґРЅРѕРј С‚Р°РєС‚Рµ
-	void PerformPrograms(); //РІС‹РїРѕР»РЅРёС‚СЊ РїСЂРѕРіСЂР°РјРјС‹(РѕРґРёРЅ С‚Р°РєС‚)
-	void RunTime(double threshould); //РІС‹РїРѕР»РЅРёС‚СЊ С‚Р°РєС‚
-	TStatistic GetStatistic(int time); //РїРѕР»СѓС‡РёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
+	TCluster(vector<TProcessor> _processers, vector<TProgram> _allPrograms, TQueue<TProgram> _queue); //конструктор
+	bool IsCorrectedProgram(TProgram & program); //программа корректна дл¤ данного кластера?
+	bool DownloadProgram(TProgram & program); //загрузить программу в кластер
+	void GenPrograms(double threshould); //сгенерировать программу на одном такте
+	void PerformPrograms(); //выполнить программы(один такт)
+	void RunTime(double threshould); //выполнить такт
+	TStatistic GetStatistic(int time); //получить статистику
 };
 
 

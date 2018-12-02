@@ -9,26 +9,26 @@ const int MaxQueueSize = 1000;
 template<class T>
 class TQueue
 {
-	int begin; //СѓРєР°Р·С‹РІР°РµС‚ РЅР° РїРµСЂРІС‹Р№ Р·Р°РЅСЏС‚С‹Р№ СЌР»РµРјРµРЅС‚
-	int end; //СѓРєР°Р·С‹РІР°РµС‚ РЅР° РїРѕР·РёС†РёСЋ, РєСѓРґР° РјРѕР¶РЅРѕ РїРѕР»РѕР¶РёС‚СЊ СЌР»РµРјРµРЅС‚
-	int size; //СЂР°Р·РјРµСЂ РѕС‡РµСЂРµРґРё
-	int count; //РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ РѕС‡РµСЂРµРґРё РЅР° С‚РµРєСѓС‰РёР№ РјРѕРјРµРЅС‚
+	int begin; //указывает на первый занятый элемент
+	int end; //указывает на позицию, куда можно положить элемент
+	int size; //размер очереди
+	int count; //количество элементов в очереди на текущий момент
 	T * pMem;
 public:
-	TQueue(int _size = MaxQueueSize); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
-	~TQueue(); //РґРµСЃС‚СЂСѓРєС‚РѕСЂ
-	TQueue(const TQueue<T> & queue); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
-	TQueue<T> & operator=(const TQueue<T> & queue); //РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
-	int GetSize();//РїРѕР»СѓС‡РёС‚ СЂР°Р·РјРµСЂ
-	bool IsEmpty();//РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
-	bool IsFull(); //РїСЂРѕРІРµСЂРєР° РЅР° РїРѕР»РЅРѕС‚Сѓ
-	T Pop(); //РІРµСЂРЅСѓС‚СЊ РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ Рё СѓРґР°Р»РёС‚СЊ РµРіРѕ
-	T PopWithoutDelete(); //РїСЂРѕСЃРјРѕС‚СЂ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° Р±РµР· СѓРґР°Р»РµРЅРёСЏ
-	void Push(T v); //РґРѕР±Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ РІ РѕС‡РµСЂРµРґСЊ
+	TQueue(int _size = MaxQueueSize); //конструктор
+	~TQueue(); //деструктор
+	TQueue(const TQueue<T> & queue); //конструктор копирования
+	TQueue<T> & operator=(const TQueue<T> & queue); //оператор присваивания
+	int GetSize();//получит размер
+	bool IsEmpty();//проверка на пустоту
+	bool IsFull(); //проверка на полноту
+	T Pop(); //вернуть первый элемент и удалить его
+	T PopWithoutDelete(); //просмотр первого элемента без удаления
+	void Push(T v); //добавить элемент в очередь
 };
 
 template <class T>
-TQueue<T>::TQueue(int _size = MaxQueueSize) //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+TQueue<T>::TQueue(int _size = MaxQueueSize) //конструктор
 {
 	if (_size < 1 || _size > MaxQueueSize)
 		throw "data is not correct";
@@ -40,13 +40,13 @@ TQueue<T>::TQueue(int _size = MaxQueueSize) //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 }
 
 template <class T>
-TQueue<T>::~TQueue() //РґРµСЃС‚СЂСѓРєС‚РѕСЂ
+TQueue<T>::~TQueue() //деструктор
 {
 	delete[] pMem;
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-TQueue<T>::TQueue(const TQueue<T> & queue) //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+TQueue<T>::TQueue(const TQueue<T> & queue) //конструктор копирования
 {
 	begin = queue.begin;
 	end = queue.end;
@@ -58,7 +58,7 @@ TQueue<T>::TQueue(const TQueue<T> & queue) //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕ
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-TQueue<T> & TQueue<T>::operator=(const TQueue<T> & queue) //РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
+TQueue<T> & TQueue<T>::operator=(const TQueue<T> & queue) //оператор присваивания
 {
 	if (this == &queue)
 		return *this;
@@ -77,25 +77,25 @@ TQueue<T> & TQueue<T>::operator=(const TQueue<T> & queue) //РѕРїРµСЂР°С‚РѕСЂ РїС
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-int TQueue<T>::GetSize() //РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
+int TQueue<T>::GetSize() //проверка на пустоту
 {
 	return count;
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-bool TQueue<T>::IsEmpty() //РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
+bool TQueue<T>::IsEmpty() //проверка на пустоту
 {
 	return !count;
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-bool TQueue<T>::IsFull() //РїСЂРѕРІРµСЂРєР° РЅР° РїРѕР»РЅРѕС‚Сѓ
+bool TQueue<T>::IsFull() //проверка на полноту
 {
 	return count == size;
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-T TQueue<T>::Pop() //РІРµСЂРЅСѓС‚СЊ РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ Рё СѓРґР°Р»РёС‚СЊ РµРіРѕ
+T TQueue<T>::Pop() //вернуть первый элемент и удалить его
 {
 	count--;
 	int flag = begin + 1;
@@ -104,13 +104,13 @@ T TQueue<T>::Pop() //РІРµСЂРЅСѓС‚СЊ РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ Рё СѓРґР°Р»РёС‚С
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-T TQueue<T>::PopWithoutDelete() //РїСЂРѕСЃРјРѕС‚СЂ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° Р±РµР· СѓРґР°Р»РµРЅРёСЏ
+T TQueue<T>::PopWithoutDelete() //просмотр первого элемента без удаления
 {
 	return pMem[(begin + 1) % size];
 }/*-------------------------------------------------------------------------*/
 
 template <class T>
-void TQueue<T>::Push(T v) //РґРѕР±Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ РІ РѕС‡РµСЂРµРґСЊ
+void TQueue<T>::Push(T v) //добавить элемент в очередь
 {
 	count++;
 	pMem[end] = v;

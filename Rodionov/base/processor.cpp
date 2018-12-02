@@ -1,28 +1,28 @@
 #include "processor.h"
 
-TProcessor::TProcessor(int _coresCPU) : coresCPU(_coresCPU), coresFree(_coresCPU) {} //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+TProcessor::TProcessor(int _coresCPU) : coresCPU(_coresCPU), coresFree(_coresCPU) {} //конструктор
 
-int TProcessor::GetCoresFree() //РїРѕР»СѓС‡РёС‚СЊ РєРѕР»-РІРѕ СЃРІРѕР±РѕРґРЅС‹С… СЏРґРµСЂ
+int TProcessor::GetCoresFree() //получить кол-во свободных ядер
 {
 	return coresFree;
 }
 
-int TProcessor::GetCores() //РїРѕР»СѓС‡РёС‚СЊ РєРѕР»-РІРѕ СЏРґРµСЂ
+int TProcessor::GetCores() //получить кол-во ядер
 {
 	return coresCPU;
 }
 
-bool TProcessor::IsFree() //РїСЂРѕС†РµСЃСЃРѕСЂ СЃРІРѕР±РѕРґРµРЅ?
+bool TProcessor::IsFree() //процессор свободен?
 {
 	return coresFree == coresCPU;
 }
 
-bool TProcessor::IsBusy() //РїСЂРѕС†РµСЃСЃРѕСЂ Р·Р°РЅСЏС‚?
+bool TProcessor::IsBusy() //процессор занят?
 {
 	return coresFree == 0;
 }
 
-bool TProcessor::ExProgram(TProgram & program) //РїРѕСЃС‚Р°РІРёС‚СЊ РїСЂРѕРіСЂР°РјРјСѓ РЅР° РёСЃРїРѕР»РЅРµРЅРёРµ РІ С‚РµРєСѓС‰РёР№ РїСЂРѕС†РµСЃСЃРѕСЂ
+bool TProcessor::ExProgram(TProgram & program) //поставить программу на исполнение в текущий процессор
 {
 	if (program.GetCores() > coresFree)
 		return false;
